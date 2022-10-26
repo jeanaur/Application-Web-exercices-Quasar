@@ -1,37 +1,33 @@
 <template>
-  <q-page padding>
-    <div class="card shadow-1">
-      <img :src="plat.img" width="198" height="180">
-      <div class="card-content">
-        <h1 class="text-primary">{{ plat.name }}</h1>
-        <p>{{ plat.description }}</p>
-        <p>
-          <small>
-            <b>Note:</b>
-          </small>
-          <b class="text-primary">
-            {{ plat.note }}/5
-          </b>
-        </p>
-        <q-btn @click="$emit('supprimerPlat', plat.id)"
-               class="full-width q-ma-md"
-               color="secondary"
-               icon="delete"
-               label="Supprimer"></q-btn>
-      </div>
+  <div class="card shadow-1">
+    <img :src="plat.img" width="198" height="180">
+    <div class="card-content">
+      <h1 class="text-primary">{{ plat.name }}</h1>
+      <p>{{ plat.description }}</p>
+      <p>
+        <small>
+          <b>Note:</b>
+        </small>
+        <b class="text-primary">
+          {{ plat.note }}
+        </b>
+      </p>
+      <q-btn @click="$emit('supprimer', plat.id)"
+             class="full-width q-ma-md"
+             color="secondary"
+             icon="delete"
+             label="Supprimer"></q-btn>
     </div>
-  </q-page>
+  </div>
 </template>
 <script>
 
 export default {
   name: 'PlatComponents',
-  data () {
-    return {
-      plat: {
-        type: Object,
-        required: true
-      }
+  props: {
+    plat: {
+      type: Object,
+      required: true
     }
   }
 }

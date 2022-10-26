@@ -5,16 +5,15 @@
     <div class="q-pa-md row items-stretch">
       <plat v-for="plat in plats"
             :key="plat.id"
-            :platEnCours="plat"
-            supprimer="v-on:supprimerPlat"
+            :plat="plat"
+            v-on:supprimer="supprimerPlat"
       ></plat>
     </div>
   </q-page>
 </template>
 <script>
-import { defineComponent } from 'vue'
 
-export default defineComponent({
+export default {
   name: 'Exercice2Page',
   components: {
     plat: require('components/PlatComponents').default
@@ -46,11 +45,11 @@ export default defineComponent({
           name: 'Petits Choux',
           description: 'Le chou de Bruxelles est une variété de chou, plante herbacée\n' +
             '            de la famille des Brassicaceae. C’est vraiement pas bon...',
-          note: '2'
+          note: '1'
         },
         {
           id: 4,
-          img: 'https://imgur.com/gallery/4B1rC4u',
+          img: 'https://i.imgur.com/TefAZKN.jpeg',
           name: 'Croque  Monsieur',
           description: 'Est un sandwich chaud passé à la poêle ou au four, constitué par deux tranches de pain de mie\n' +
             ' entre lesquelles sont placées une tranche de fromage et une tranche de jambon.',
@@ -60,37 +59,11 @@ export default defineComponent({
     }
   },
   methods: {
-    supprimerPlat (identifiant) {
-      this.plats = this.plats.filter(function (platEnCours) {
-        return platEnCours.identifiant !== identifiant
+    supprimerPlat (id) {
+      this.plats = this.plats.filter(function (plat) {
+        return plat.id !== id
       })
     }
   }
-})
+}
 </script>
-<style scoped>
-.card {
-  flex-basis: 210px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 5px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
-
-.card img {
-  max-width: 100%;
-}
-
-.card-content {
-  padding: 0 10px;
-}
-
-h1 {
-  font-size: 23px;
-}
-
-p {
-  font-size: 14px;
-}
-</style>
