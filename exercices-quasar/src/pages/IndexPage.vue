@@ -1,5 +1,6 @@
 <template>
-  <router-link :to="{ path: 'Ex1' }">Exercice 1</router-link>
+  <router-link :to="{ path: 'ex1' }">Exercice 1</router-link>
+  <router-link :to="{ path: 'ex2' }">Exercice 2</router-link>
   <q-page class="flex flex-center">
     <img
       alt="Quasar logo"

@@ -1,5 +1,6 @@
 <template>
   <router-link :to="{ path: '/' }">Home page</router-link>
+  <router-link :to="{ path: 'ex2' }">Exercice2</router-link>
   <q-page padding>
     <div className="form q-mb-lg">
       <div className="row q-mb-md">
