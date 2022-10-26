@@ -1,4 +1,5 @@
 <template>
+  <router-link :to="{ path: 'Ex1' }">Exercice 1</router-link>
   <q-page class="flex flex-center">
     <img
       alt="Quasar logo"
