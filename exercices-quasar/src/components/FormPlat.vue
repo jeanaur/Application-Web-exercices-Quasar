@@ -39,7 +39,7 @@
           label="URL de l'image"
           className="col"/>
         <q-img
-          :src="plat.image ? plat.image : 'src/statics/image-placeholder.png'"
+          :src="plat.image ? plat.image : 'statics/image-placeholder.png'"
           class="q-ml-sm"
           contain/>
       </div>
