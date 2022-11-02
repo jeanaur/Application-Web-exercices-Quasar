@@ -16,7 +16,6 @@
           @close="afficherFormPlat = false "
           action="ajouter" />
       </q-dialog>
-
     </div>
   </q-page>
 </template>

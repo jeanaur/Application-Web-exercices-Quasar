@@ -2,7 +2,7 @@
   <q-card
     class="card">
     <q-img
-      :src="plat.image ? plat.image: 'statics/image-placeholder.png'"
+      :src="plat.image ? plat.image: 'src/statics/image-placeholder.png'"
       basic
       contain
     >

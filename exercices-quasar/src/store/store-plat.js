@@ -1,8 +1,6 @@
 // eslint-disable-next-line import/default
 import Vue from 'vue'
 import { uid } from 'quasar'
-
-// State : données du magasin
 const state = {
   plats: [
     {
@@ -36,18 +34,12 @@ const state = {
   ]
 }
 
-/*
-Mutations : méthode qui manipulent les données
-Les mutations ne peuvent pas être asynchrones !!!
- */
 const mutations = {
   supprimerPlat (state, id) {
-    // Recherche la tâche et retourne sa position dans le tableau, son index
     const index = state.plats.findIndex(plat => plat.id === id)
     Vue.delete(state.plats, index)
   },
   ajouterPlat (state, plat) {
-    // Ajout de la tâche à fin du tableau
     state.plats.push(plat)
   },
   modifierPlat (state, plat) {
@@ -55,43 +47,27 @@ const mutations = {
     Vue.set(state.plats, index, plat)
   }
 }
-/*
-Actions : méthodes du magasin qui font appel aux mutations
-Elles peuvent être asynchrones !
- */
+
 const actions = {
   supprimerPlat ({ commit }, id) {
     commit('supprimerPlat', id)
   },
   ajouterPlat ({ commit }, plat) {
-    const newld = uid()
-    plat.id = newld
+    const newId = uid()
+    plat.id = newId
     commit('ajouterPlat', plat)
   },
   modifierPlat ({ commit }, plat) {
-    // Valide la mutation et y passe les données
     commit('modifierPlat', plat)
   }
 }
 
-/*
-Getters : retourne les données du magasin
-Fonctionne comme les propriétés calculées
-Sert à calculer, trier, filtrer ou formater les donneés
- */
 const getters = {
-  // Prend le state comme 1er paramètre
   plats: (state) => {
     return state.plats
   }
 }
 
-/*
-Exporte les constantes, variables du fichier
-On pourra ainsi les récupérer, les importer dans un autre fichier JS.
-
-namespace: true, ajoute un namespace à notre objet retourné.
- */
 export default {
   namespaced: true,
   state,
