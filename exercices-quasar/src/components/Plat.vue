@@ -2,7 +2,7 @@
   <q-card
     class="card">
     <q-img
-      :src="plat.image"
+      :src="plat.image ? plat.image: 'statics/image-placeholder.png'"
       basic
       contain
     >
@@ -22,7 +22,8 @@
     </q-card-section>
 
     <q-card-section>
-      {{ plat.description }}
+      <span v-if="plat.description">{{ plat.description }}</span>
+      <i v-else>Aucune description fournie.</i>
     </q-card-section>
 
     <q-card-actions
@@ -34,6 +35,7 @@
         color="blue"
         flat>Modifier</q-btn>
       <q-btn
+        @click="dialogSupprimer()"
         icon="delete"
         color="red"
         flat>Supprimer</q-btn>
@@ -41,12 +43,18 @@
 
     <q-dialog
       v-model="afficherFormPlat">
-      <form-plat action="modifier" />
+      <form-plat
+        action="modifier"
+        :platAModifier="plat"
+        @close="afficherFormPlat = false" />
     </q-dialog>
   </q-card>
 </template>
 
 <script>
+// importation des fonctions utilitaires
+import { mapActions } from 'vuex'
+
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Plat',
@@ -56,6 +64,30 @@ export default {
       afficherFormPlat: false
     }
   },
+  methods: {
+    // Mappage des actions
+    ...mapActions('plats', ['supprimerPlat']),
+    // Ouvre une boite de dialog pour confirmer la suppression
+    dialogSupprimer () {
+      this.$q.dialog({
+        title: 'Supprimer plat',
+        message: 'Voulez-vous vraiment supprimer ce plat ?',
+        persistent: true,
+        ok: {
+          label: 'Supprimer',
+          push: true
+        },
+        cancel: {
+          label: 'Annuler',
+          push: true,
+          color: 'grey'
+        }
+      }).onOk(() => {
+        this.supprimerPlat(this.plat.id)
+      })
+    }
+  },
+
   components: {
     'form-plat': require('components/FormPlat.vue').default
   }

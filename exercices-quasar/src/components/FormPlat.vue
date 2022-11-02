@@ -8,19 +8,28 @@
 
       <div className="row q-mb-md">
         <q-input
+          :rules="[
+            val => !!val || '* Obligatoire',
+            val => val.length < 21 || 'Maximum 20 caractères',
+           ]"
           filled
           v-model="plat.nom"
           label="Nom (Burger)"
-          className="col"/>
+          class="col"
+          ref="nom" />
       </div>
 
       <div className="row q-mb-md">
         <q-input
+          :rules="[
+            val => val.length < 136 || 'Maximum 135 caractères',
+          ]"
           filled
           v-model="plat.description"
           label="Description"
           type="textarea"
-          className="col"/>
+          className="col"
+          ref="description" />
       </div>
 
       <div className="row q-mb-md">
@@ -55,17 +64,19 @@
         color="grey"
         v-close-popup/>
       <q-btn
+        @click="submitForm"
         label="Sauver"
-        color="primary"
-        v-close-popup/>
+        color="primary" />
     </q-card-actions>
   </q-card>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'FormPlat',
-  props: ['action'],
+  props: ['action', 'platAModifier'],
   data () {
     return {
       plat: {
@@ -74,6 +85,31 @@ export default {
         note: 1,
         image: ''
       }
+    }
+  },
+  methods: {
+    // Mappage des actions
+    ...mapActions('plats', ['ajouterPlat', 'modifierPlat']),
+    submitForm () {
+      this.$refs.nom.validate()
+      this.$refs.description.validate()
+
+      if (!this.$refs.nom.hasError && !this.$refs.description.hasError) {
+        this.$emit('close')
+        this.sauverPlat()
+      }
+    },
+    sauverPlat () {
+      if (this.action === 'ajouter') {
+        this.ajouterPlat(this.plat)
+      } else {
+        this.modifierPlat(this.plat)
+      }
+    }
+  },
+  mounted () {
+    if (this.action === 'modifier') {
+      this.plat = Object.assign({}, this.platAModifier)
     }
   }
 }
