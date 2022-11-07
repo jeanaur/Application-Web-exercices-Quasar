@@ -15,8 +15,7 @@
           filled
           v-model="plat.nom"
           label="Nom (Burger)"
-          class="col"
-          ref="nom" />
+          class="col" />
       </div>
 
       <div className="row q-mb-md">
@@ -28,8 +27,7 @@
           v-model="plat.description"
           label="Description"
           type="textarea"
-          className="col"
-          ref="description" />
+          className="col" />
       </div>
 
       <div className="row q-mb-md">
@@ -64,9 +62,10 @@
         color="grey"
         v-close-popup/>
       <q-btn
-        @click="submitForm"
+        @click.stop="submitForm"
         label="Sauver"
-        color="primary" />
+        color="primary"
+        v-close-popup/>
     </q-card-actions>
   </q-card>
 </template>
@@ -91,13 +90,16 @@ export default {
     // Mappage des actions
     ...mapActions('plats', ['ajouterPlat', 'modifierPlat']),
     submitForm () {
-      this.$refs.nom.validate()
-      this.$refs.description.validate()
-
-      if (!this.$refs.nom.hasError && !this.$refs.description.hasError) {
-        this.$emit('close')
-        this.sauverPlat()
+      if (this.plat.id) {
+        const playload = {
+          id: this.plat.id,
+          updates: this.plat
+        }
+        this.modifierPlat(playload)
+      } else {
+        this.ajouterPlat(this.plat)
       }
+      this.$emit('fermer')
     },
     sauverPlat () {
       if (this.action === 'ajouter') {
@@ -108,7 +110,7 @@ export default {
     }
   },
   mounted () {
-    if (this.action === 'modifier') {
+    if (this.platAModifier) {
       this.plat = Object.assign({}, this.platAModifier)
     }
   }

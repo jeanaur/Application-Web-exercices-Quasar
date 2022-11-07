@@ -1,6 +1,3 @@
-// eslint-disable-next-line import/default
-import Vue from 'vue'
-import { uid } from 'quasar'
 const state = {
   plats: [
     {
@@ -36,15 +33,20 @@ const state = {
 
 const mutations = {
   supprimerPlat (state, id) {
-    const index = state.plats.findIndex(plat => plat.id === id)
-    Vue.delete(state.plats, index)
+    state.plats = state.plats.filter(plat => plat.id !== id)
   },
   ajouterPlat (state, plat) {
     state.plats.push(plat)
   },
-  modifierPlat (state, plat) {
-    const index = state.plats.findIndex(statePlat => statePlat.id === plat.id)
-    Vue.set(state.plats, index, plat)
+  modifierPlat (state, payload) {
+    // Recherche la tâche et retourne sa position dans le tableau, son index
+    const index = state.plats.findIndex(el => el.id === payload.id)
+
+    // Si une tâche a été trouvée
+    if (index !== -1) {
+      // Modifie l'objet trouvé avec les nouvelles valeurs
+      Object.assign(state.plats[index], payload.updates)
+    }
   }
 }
 
@@ -53,12 +55,19 @@ const actions = {
     commit('supprimerPlat', id)
   },
   ajouterPlat ({ commit }, plat) {
-    const newId = uid()
-    plat.id = newId
+    let uId = 1
+    // Si le tableau contient des éléments
+    if (state.plats.length) {
+      // Récupère l'id MAX et lui ajoute 1
+      uId = Math.max(...state.plats.map(plat => plat.id)) + 1
+    }
+    // Ajoute le nouvel id à la tache
+    plat.id = uId
+    // Commite l'ajout
     commit('ajouterPlat', plat)
   },
-  modifierPlat ({ commit }, plat) {
-    commit('modifierPlat', plat)
+  modifierPlat ({ commit }, payload) {
+    commit('modifierPlat', payload)
   }
 }
 

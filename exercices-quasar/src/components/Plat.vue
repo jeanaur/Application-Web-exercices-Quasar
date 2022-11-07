@@ -13,7 +13,7 @@
 
     <q-card-section>
       <q-rating
-        :value="plat.note"
+        :model-value="plat.note"
         size="2em"
         color="orange"
         readonly
@@ -30,12 +30,14 @@
       class="absolute-bottom"
       align="right">
       <q-btn
-        @click="afficherFormPlat = true"
+        @click.stop="afficherFormPlat = true"
+        dense
+        round
         icon="edit"
         color="blue"
         flat>Modifier</q-btn>
       <q-btn
-        @click="dialogSupprimer()"
+        @click.stop="dialogSupprimer(plat.id)"
         icon="delete"
         color="red"
         flat>Supprimer</q-btn>
@@ -68,7 +70,7 @@ export default {
     // Mappage des actions
     ...mapActions('plats', ['supprimerPlat']),
     // Ouvre une boite de dialog pour confirmer la suppression
-    dialogSupprimer () {
+    dialogSupprimer (id) {
       this.$q.dialog({
         title: 'Supprimer plat',
         message: 'Voulez-vous vraiment supprimer ce plat ?',
