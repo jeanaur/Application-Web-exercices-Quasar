@@ -2,44 +2,40 @@
   <q-page padding>
     <h3>Liste des clients</h3>
     <q-list
+      v-if="clients.length"
       class="rounded-borders"
       bordered
       separator
     >
-      <!-- Un élément de liste, un client -->
-      <q-item clickable v-ripple>
-        <!-- Photo du client -->
-        <q-item-section avatar>
-          <q-avatar>
-            <img src="https://randomuser.me/api/portraits/thumb/women/9.jpg">
-          </q-avatar>
-        </q-item-section>
-
-        <!-- Nom, prénom et email du client -->
-        <q-item-section>
-          <q-item-label lines="1">
-            Marchand Pauline
-          </q-item-label>
-          <q-item-label caption lines="2">
-            pauline.marchand@divcom.ch
-          </q-item-label>
-        </q-item-section>
-
-        <!-- Icône email -->
-        <q-item-section side>
-          <q-icon name="email" color="primary"/>
-        </q-item-section>
-      </q-item>
+      <!-- Ajout du composant Client.vue via une propriété -->
+      <clients
+        v-for="client of clients"
+        :key="client.id.value"
+        :client="client"
+        />
     </q-list>
+    <p v-else>Aucun clients !</p>
   </q-page>
 </template>
 
 <script>
+import Client from 'components/Client'
+
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  name: 'ClientPage'
+  name: 'ClientPage',
+  // eslint-disable-next-line vue/no-unused-components
+  components: { Client },
+  computed: {
+    ...mapGetters('clients', ['clients'])
+  },
+  methods: {
+    ...mapActions('clients', ['getClientsApi'])
+  },
+  mounted () {
+    this.getClientsApi()
+  }
 }
 </script>
-
 <style scoped>
-
 </style>
