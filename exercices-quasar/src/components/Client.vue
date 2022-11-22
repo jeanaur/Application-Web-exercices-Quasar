@@ -2,18 +2,18 @@
   <q-card
     class="card">
     <q-img
-      :src="plat.image ? plat.image: 'statics/image-placeholder.png'"
+      :src="clients.image ? clients.image: 'statics/image-placeholder.png'"
       basic
       contain
     >
       <div class="absolute-bottom text-h6">
-        {{ plat.nom }}
+        {{ clients.nom }}
       </div>
     </q-img>
 
     <q-card-section>
       <q-rating
-        :model-value="plat.note"
+        :model-value="clients.note"
         size="2em"
         color="orange"
         readonly
@@ -22,7 +22,7 @@
     </q-card-section>
 
     <q-card-section>
-      <span v-if="plat.description">{{ plat.description }}</span>
+      <span v-if="clients.description">{{ plat.description }}</span>
       <i v-else>Aucune description fournie.</i>
     </q-card-section>
 

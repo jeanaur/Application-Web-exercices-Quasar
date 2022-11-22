@@ -1,11 +1,7 @@
 <template>
-  <router-link :to="{ path: 'ex3' }">Exercice 3</router-link>
-  <q-page class="flex flex-center">
-    <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-vertical.svg"
-      style="width: 200px; height: 200px"
-    >
+  <q-page padding>
+    <h3>CliGest</h3>
+    <p class="text-subtitle1">L'application pour gérer vos clients !</p>
   </q-page>
 </template>
 

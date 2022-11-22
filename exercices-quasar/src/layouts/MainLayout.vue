@@ -6,45 +6,55 @@
           flat
           dense
           round
-          @click="leftDrawerOpen = !leftDrawerOpen"
+          icon="menu"
           aria-label="Menu"
-        >
-          <q-icon name="menu" />
-        </q-btn>
+          @click="leftDrawerOpen = !leftDrawerOpen"
+        />
 
         <q-toolbar-title>
-          Quasar | Exercice 3
+          CliGest
         </q-toolbar-title>
 
-        <div>Vuex & Formulaires</div>
+        <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
 
     <q-drawer
       v-model="leftDrawerOpen"
+      show-if-above
       bordered
-      content-class="bg-grey-2"
+      content-class="bg-grey-1"
     >
       <q-list>
-        <q-item-label header>Menu de navigation</q-item-label>
-        <q-item clickable to="/" exact>
+        <q-item
+          v-for="lien in liens"
+          :key="lien.id"
+          :to="lien.route"
+          exact
+          clickable
+        >
           <q-item-section avatar>
-            <q-icon name="assignment" />
+            <q-icon :name="lien.icone" />
           </q-item-section>
+
           <q-item-section>
-            <q-item-label>Exercice</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item clickable to="/solution" exact>
-          <q-item-section avatar>
-            <q-icon name="emoji_objects" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Solution</q-item-label>
+            <q-item-label>{{ lien.libelle }}</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
     </q-drawer>
+    <q-footer>
+      <q-tabs>
+        <q-route-tab
+          v-for="lien in liens"
+          :key="lien.id"
+          :to="lien.route"
+          :icon="lien.icone"
+          :label="lien.libelle"
+          exact
+        />
+      </q-tabs>
+    </q-footer>
 
     <q-page-container>
       <router-view />
@@ -53,20 +63,39 @@
 </template>
 
 <script>
-import { openURL } from 'quasar'
 
 export default {
   name: 'MainLayout',
   data () {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop
+      // Indique si le menu latéral est ouvert ou non.
+      leftDrawerOpen: false,
+      // Tableau des liens de l'application
+      liens: [
+        {
+          id: 1,
+          libelle: 'Accueil',
+          icone: 'home',
+          route: '/'
+        },
+        {
+          id: 2,
+          libelle: 'Clients',
+          icone: 'list',
+          route: '/client'
+        }
+      ]
     }
-  },
-  methods: {
-    openURL
   }
 }
 </script>
 
-<style>
+<style lang="scss">
+/* Applique les règles de ce bloc uniquement aux écrans >= 768px */
+@media screen and (min-width: 768px) {
+  /* Cache les éléments avec la classe CSS q-footer */
+  .q-footer {
+    display: none;
+  }
+}
 </style>
