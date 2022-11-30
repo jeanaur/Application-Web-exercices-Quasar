@@ -1,7 +1,7 @@
 import { store } from 'quasar/wrappers'
 import { createStore } from 'vuex'
 
-import clients from 'src/store/clients.js'
+import clients from './clients'
 
 /*
  * If not building with SSR mode, you can

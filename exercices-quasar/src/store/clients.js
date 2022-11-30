@@ -1,5 +1,4 @@
 import { api } from 'boot/axios'
-
 // State : données du magasin
 const state = {
   clients: [
@@ -589,6 +588,7 @@ const actions = {
       })
       // En cas d'erreur, stoppe le script et affiche le message dans la console
       .catch(function (error) {
+        console.log(error)
         throw error
       })
   }
